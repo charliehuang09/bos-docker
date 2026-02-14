@@ -33,21 +33,6 @@ RUN cmake --build . --parallel 4
 RUN cmake --build . --target install
 COPY wpilib-config.cmake /usr/local/share/wpilib/wpilib-config.cmake
 
-WORKDIR /perf
-RUN wget https://developer.nvidia.com/downloads/embedded/l4t/r36_release_v4.0/sources/public_sources.tbz2 
-RUN gunzip -c /proc/config.gz | grep PERF
-RUN tar -xjf public_sources.tbz2
-RUN apt-get install -y libperl-dev
-RUN apt-get install -y flex
-RUN apt-get install -y bison
-RUN apt-get install -y libslang2-dev
-RUN apt-get install -y libbfd-dev
-RUN apt-get install -y tree
-RUN tar -xjf Linux_for_Tegra/source/kernel_src.tbz2
-WORKDIR kernel/kernel-jammy-src/tools/perf
-RUN make -j$(nproc)
-RUN cp perf /usr/bin
-
 WORKDIR /eigen
 RUN git clone https://gitlab.com/libeigen/eigen.git
 WORKDIR eigen
